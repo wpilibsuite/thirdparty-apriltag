@@ -1,0 +1,64 @@
+plugins {
+    id 'c'
+    id 'visual-studio'
+    id 'edu.wpi.first.NativeUtils' version '2023.3.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext.licenseFile = file("$rootDir/LICENSE.txt")
+
+apply from: 'config.gradle'
+
+def outputsFolder = file("$buildDir/allOutputs")
+
+task copyAllOutputs(type: Copy) {
+    destinationDir outputsFolder
+}
+
+build.dependsOn copyAllOutputs
+
+ext.addTaskToCopyAllOutputs = { task ->
+    copyAllOutputs.dependsOn task
+    copyAllOutputs.inputs.file task.archivePath
+    copyAllOutputs.from task.archivePath
+}
+
+model {
+    components {
+        apriltag(NativeLibrarySpec) {
+            sources {
+                c {
+                    source {
+                        srcDirs 'apriltag'
+                        include '**/*.c'
+                        exclude 'apriltag_pywrap.c'
+                    }
+                    exportedHeaders {
+                        srcDirs 'apriltag'
+                        include '**/*.h'
+                    }
+                }
+            }
+            binaries.all {
+                if (toolChain in VisualCpp) {
+                    // cCompiler.args '-D_UNICODE', '-DUNICODE', '-DWIN32',  '-D_WIN32', '-DSTRICT', '-DWIN32_LEAN_AND_MEAN', '-D_HAS_EXCEPTIONS=1'
+                } else {
+                    cCompiler.args '-w', '-fsyntax-only', "-Wno-error=format-truncation"
+                }
+            }
+            binaries.withType(SharedLibraryBinarySpec) {
+                buildable = false
+            }
+            appendDebugPathToBinaries(binaries)
+        }
+    }
+}
+
+apply from: 'publish.gradle'
+
+wrapper {
+    gradleVersion = '7.5.1'
+}
