@@ -43,7 +43,7 @@ copyAllOutputs.dependsOn outputVersions
 copyAllOutputs.inputs.file versionFile
 copyAllOutputs.from versionFile
 
-task cppSourcesZip(type: Zip) {
+task cSourcesZip(type: Zip) {
     destinationDirectory = outputsFolder
     archiveBaseName = zipBaseName
     classifier = "sources"
@@ -59,7 +59,7 @@ task cppSourcesZip(type: Zip) {
     }
 }
 
-task cppHeadersZip(type: Zip) {
+task cHeadersZip(type: Zip) {
     destinationDirectory = outputsFolder
     archiveBaseName = zipBaseName
     classifier = "headers"
@@ -74,22 +74,22 @@ task cppHeadersZip(type: Zip) {
     }
 }
 
-build.dependsOn cppHeadersZip
-build.dependsOn cppSourcesZip
+build.dependsOn cHeadersZip
+build.dependsOn cSourcesZip
 
-addTaskToCopyAllOutputs(cppHeadersZip)
-addTaskToCopyAllOutputs(cppSourcesZip)
+addTaskToCopyAllOutputs(cHeadersZip)
+addTaskToCopyAllOutputs(cSourcesZip)
 
 model {
     publishing {
         def gTaskList = createComponentZipTasks($.components, ['apriltag'], zipBaseName, Zip, project, includeStandardZipFormat)
         publications {
-            cpp(MavenPublication) {
+            c(MavenPublication) {
                 gTaskList.each {
                     artifact it
                 }
-                artifact cppHeadersZip
-                artifact cppSourcesZip
+                artifact cHeadersZip
+                artifact cSourcesZip
 
                 artifactId = baseArtifactId
                 groupId artifactGroupId

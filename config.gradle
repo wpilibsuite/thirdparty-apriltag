@@ -97,6 +97,8 @@ ext.createComponentZipTasks = { components, names, base, type, project, func ->
             archiveBaseName = '_M_' + base
             duplicatesStrategy = 'exclude'
 
+            println "Made archive " + archiveBaseName 
+
             from(licenseFile) {
                 into '/'
             }
