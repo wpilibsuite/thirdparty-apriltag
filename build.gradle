@@ -1,3 +1,5 @@
+import org.gradle.internal.jvm.Jvm
+
 plugins {
     id 'c'
     id 'cpp'
@@ -54,6 +56,25 @@ model {
                     // cCompiler.args '-D_UNICODE', '-DUNICODE', '-DWIN32',  '-D_WIN32', '-DSTRICT', '-DWIN32_LEAN_AND_MEAN', '-D_HAS_EXCEPTIONS=1'
                 } else {
                     cCompiler.args '-w', '-fsyntax-only', "-Wno-error=format-truncation"
+                    cppCompiler.args '-w', '-fsyntax-only', "-Wno-error=format-truncation"
+                }
+
+                if (targetPlatform.operatingSystem.macOsX) {
+                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include"
+                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include/darwin"
+                    cppCompiler.args '-mmacosx-version-min=10.4'
+                    linker.args '-mmacosx-version-min=10.4'
+                } else if (targetPlatform.operatingSystem.linux) {
+                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include"
+                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include/linux"
+                    cppCompiler.args '-D_FILE_OFFSET_BITS=64'
+                } else if (targetPlatform.operatingSystem.windows) {
+                    cppCompiler.args "-I${Jvm.current().javaHome}/include"
+                    cppCompiler.args "-I${Jvm.current().javaHome}/include/win32"
+                    linker.args "Shlwapi.lib", "Advapi32.lib"
+                } else if (targetPlatform.operatingSystem.freeBSD) {
+                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include"
+                    cppCompiler.args '-I', "${Jvm.current().javaHome}/include/freebsd"
                 }
             }
             binaries.withType(SharedLibraryBinarySpec) {
