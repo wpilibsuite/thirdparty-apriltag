@@ -59,6 +59,8 @@ model {
                     cppCompiler.args '-w', '-fsyntax-only', "-Wno-error=format-truncation"
                 }
 
+                // cppCompiler.args '-I', "apriltag"
+
                 if (targetPlatform.operatingSystem.macOsX) {
                     cppCompiler.args '-I', "${Jvm.current().javaHome}/include"
                     cppCompiler.args '-I', "${Jvm.current().javaHome}/include/darwin"

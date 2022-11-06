@@ -1,3 +1,6 @@
 [submodule "apriltag"]
 	path = apriltag
 	url = https://github.com/photonvision/apriltag
+[submodule "thirdparty-apriltag"]
+	path = thirdparty-apriltag
+	url = https://github.com/mcm001/thirdparty-apriltag.git
