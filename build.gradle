@@ -53,7 +53,8 @@ model {
             }
             binaries.all {
                 if (toolChain in VisualCpp) {
-                    // cCompiler.args '-D_UNICODE', '-DUNICODE', '-DWIN32',  '-D_WIN32', '-DSTRICT', '-DWIN32_LEAN_AND_MEAN', '-D_HAS_EXCEPTIONS=1'
+                    cCompiler.args '/w', '-D_UNICODE', '-DUNICODE', '-DWIN32',  '-D_WIN32', '-DSTRICT', '-DWIN32_LEAN_AND_MEAN', '-D_HAS_EXCEPTIONS=1'
+                    cppCompiler.args '/w', '-D_UNICODE', '-DUNICODE', '-DWIN32',  '-D_WIN32', '-DSTRICT', '-DWIN32_LEAN_AND_MEAN', '-D_HAS_EXCEPTIONS=1'
                 } else {
                     cCompiler.args '-w', '-fsyntax-only', "-Wno-error=format-truncation"
                     cppCompiler.args '-w', '-fsyntax-only', "-Wno-error=format-truncation"
