@@ -46,8 +46,17 @@ model {
                 c {
                     source {
                         srcDirs 'apriltag'
-                        include '**/*.c'
-                        exclude 'apriltag_pywrap.c'
+                        include 'apriltag.c', 'apriltag_pose.c', 'apriltag_quad_thresh.c', 'tagStandard41h12.c', 'tag16h5.c', 'tag25h9.c', 'tag36h11.c', 'tagCircle21h7.c', 'tagCircle49h12.c', 'tagCustom48h12.c', 'tagStandard52h13.c'
+                    }
+                    exportedHeaders {
+                        srcDirs 'apriltag'
+                        include '**/*.h'
+                    }
+                }
+                cpp {
+                    source {
+                        srcDirs 'apriltag'
+                        include 'pthreads_cross.cpp'
                     }
                     exportedHeaders {
                         srcDirs 'apriltag'
@@ -67,7 +76,7 @@ model {
                 cpp {
                     source {
                         srcDirs 'apriltag'
-                        include '**/*.cpp'
+                        include 'AprilTagJNI.cpp'
                     }
                     exportedHeaders {
                         srcDirs 'apriltag'
