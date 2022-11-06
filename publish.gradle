@@ -82,7 +82,7 @@ addTaskToCopyAllOutputs(cSourcesZip)
 
 model {
     publishing {
-        def gTaskList = createComponentZipTasks($.components, ['apriltag'], zipBaseName, Zip, project, includeStandardZipFormat)
+        def gTaskList = createComponentZipTasks($.components, ['apriltag', 'apriltagjni'], zipBaseName, Zip, project, includeStandardZipFormat)
         publications {
             c(MavenPublication) {
                 gTaskList.each {
