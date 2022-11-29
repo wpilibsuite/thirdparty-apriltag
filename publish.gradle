@@ -11,13 +11,13 @@ publishing {
     }
 }
 
-def releaseNumber = 1
+def releaseNumber = 2
 
 def pubVersion = "1.11.0-$releaseNumber"
 
-def baseArtifactId = 'apriltag'
+def baseArtifactId = 'apriltaglib'
 def artifactGroupId = 'edu.wpi.first.thirdparty.frc2023'
-def zipBaseName = '_GROUP_edu_wpi_first_thirdparty_frc2023_ID_apriltag_CLS'
+def zipBaseName = '_GROUP_edu_wpi_first_thirdparty_frc2023_ID_apriltaglib_CLS'
 
 def outputsFolder = file("$project.buildDir/outputs")
 
@@ -82,7 +82,7 @@ addTaskToCopyAllOutputs(cSourcesZip)
 
 model {
     publishing {
-        def gTaskList = createComponentZipTasks($.components, ['apriltag', 'apriltagjni'], zipBaseName, Zip, project, includeStandardZipFormat)
+        def gTaskList = createComponentZipTasks($.components, ['apriltaglib'], zipBaseName, Zip, project, includeStandardZipFormat)
         publications {
             c(MavenPublication) {
                 gTaskList.each {
