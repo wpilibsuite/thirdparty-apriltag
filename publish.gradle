@@ -72,6 +72,10 @@ task cHeadersZip(type: Zip) {
         into '/'
         include "*.h"
     }
+    from('apriltag/common/') {
+        include "*.h"
+        into '/common'
+    }
 }
 
 build.dependsOn cHeadersZip
