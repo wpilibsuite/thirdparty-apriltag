@@ -11,9 +11,9 @@ publishing {
     }
 }
 
-def releaseNumber = 2
+def releaseNumber = 1
 
-def pubVersion = "1.11.0-$releaseNumber"
+def pubVersion = "3.2.0-$releaseNumber"
 
 def baseArtifactId = 'apriltaglib'
 def artifactGroupId = 'edu.wpi.first.thirdparty.frc2023'
