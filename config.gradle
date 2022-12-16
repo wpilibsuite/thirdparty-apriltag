@@ -27,6 +27,11 @@ model {
     binaries {
         withType(NativeBinarySpec).all {
             nativeUtils.usePlatformArguments(it)
+            if (it.toolChain instanceof GccCompatibleToolChain) {
+                it.cCompiler.args << "-fvisibility=hidden"
+                it.cppCompiler.args << "-fvisibility=hidden"
+            }
+
         }
     }
 }
