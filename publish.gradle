@@ -46,7 +46,7 @@ copyAllOutputs.from versionFile
 task cSourcesZip(type: Zip) {
     destinationDirectory = outputsFolder
     archiveBaseName = zipBaseName
-    classifier = "sources"
+    archiveClassifier = "sources"
 
     from(licenseFile) {
         into '/'
@@ -62,7 +62,7 @@ task cSourcesZip(type: Zip) {
 task cHeadersZip(type: Zip) {
     destinationDirectory = outputsFolder
     archiveBaseName = zipBaseName
-    classifier = "headers"
+    archiveClassifier = "headers"
 
     from(licenseFile) {
         into '/'
