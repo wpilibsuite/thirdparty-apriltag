@@ -11,7 +11,7 @@ publishing {
     }
 }
 
-def releaseNumber = 7
+def releaseNumber = 8
 
 def pubVersion = "3.2.0-$releaseNumber"
 
