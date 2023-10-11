@@ -4,7 +4,7 @@ plugins {
     id 'c'
     id 'cpp'
     id 'visual-studio'
-    id 'edu.wpi.first.NativeUtils' version '2024.0.0'
+    id 'edu.wpi.first.NativeUtils' version '2024.3.1'
     id 'edu.wpi.first.GradleVsCode' version '1.3.0'
 }
 
