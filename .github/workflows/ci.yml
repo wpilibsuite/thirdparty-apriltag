@@ -24,13 +24,13 @@ jobs:
     runs-on: ubuntu-latest
     container: ${{ matrix.container }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
+          fetch-depth: 0
       - name: Fetch all history and metadata
         run: |
           git config --global --add safe.directory /__w/thirdparty-apriltag/thirdparty-apriltag
-          git fetch --prune --unshallow
       - name: Build with Gradle
         run: ./gradlew build --max-workers 1 ${{ matrix.build-options }}
       - uses: actions/upload-artifact@v3
@@ -39,30 +39,31 @@ jobs:
           path: build/allOutputs
 
   build-host:
+    env: 
+      MACOSX_DEPLOYMENT_TARGET: 11
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: windows-2019
+          - os: windows-2022
             artifact-name: Win64
             architecture: x64
-          - os: windows-2019
+          - os: windows-2022
             artifact-name: Win32
             architecture: x86
-          - os: macos-11
+          - os: macos-12
             artifact-name: macOS
             architecture: x64
     name: "Build - ${{ matrix.artifact-name }}"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Fetch all history and metadata
-        run: git fetch --prune --unshallow
+          fetch-depth: 0
       - uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: 17
           distribution: 'zulu'
           architecture: ${{ matrix.architecture }}
       - name: Build with Gradle
@@ -77,7 +78,7 @@ jobs:
     needs: [build-docker, build-host]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: wpilibsuite/build-tools
       - uses: actions/download-artifact@v3
@@ -87,7 +88,7 @@ jobs:
         run: rsync -a --delete combiner/products/build/allOutputs/*/* combiner/products/build/allOutputs/
       - uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: 17
           distribution: 'zulu'
       - name: Combine
         if: |
